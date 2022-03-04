@@ -1,0 +1,1 @@
+## Files in here will be processed as EJS templates.

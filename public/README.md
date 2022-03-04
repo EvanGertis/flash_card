@@ -1,0 +1,1 @@
+## Any files in here will be publicly accessible from the server (images, html, js, etc)

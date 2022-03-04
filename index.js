@@ -23,6 +23,16 @@ app.get('/cards/:category', (req, res) => {
     });
 });
 
+app.post('/card', (req, res) => {
+    let category = req.body.category;
+    let question = req.body.question;
+    let answer = req.body.answer;
+
+    connection.query('INSERT INTO cards (category, question, answer) VALUES (?, ?, ?)', [category, question, answer], (err, results) => {
+        res.json({ id: results.insertId, category: category, quwestion: question, answer: answer });
+    });
+});
+
 app.get('/card', (req, res) => {
     connection.query('SELECT id,category,question,answer FROM cards ORDER BY RAND() LIMIT 1', (err, results) => {
         let output = {

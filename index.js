@@ -12,6 +12,17 @@ const connection = mysql.createConnection({
     host: process.env.DB_HOST,
 });
 
+app.get('/cards', (req, res) => {
+    connection.query('SELECT id,category,question FROM cards ORDER BY category,id', (err, results) => {
+        res.json(results);
+    });
+});
+app.get('/cards/:category', (req, res) => {
+    connection.query('SELECT id,category,question FROM cards WHERE category = ? ORDER BY id', [req.params.category], (err, results) => {
+        res.json(results);
+    });
+});
+
 app.get('/card', (req, res) => {
     connection.query('SELECT id,category,question,answer FROM cards ORDER BY RAND() LIMIT 1', (err, results) => {
         let output = {

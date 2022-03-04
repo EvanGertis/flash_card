@@ -12,6 +12,10 @@ const connection = mysql.createConnection({
     host: process.env.DB_HOST,
 });
 
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+
 app.get('/cards', (req, res) => {
     connection.query('SELECT id,category,question FROM cards ORDER BY category,id', (err, results) => {
         res.json(results);
@@ -46,8 +50,5 @@ app.get('/card', (req, res) => {
     });
 });
 
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
 
 app.listen(process.env.PORT || 3000);

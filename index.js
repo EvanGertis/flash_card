@@ -16,6 +16,23 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
+// GET /categories - list all categories in the system
+// GET /card - get a random card
+// GET /card/:category - get a random card from the category
+// GET /cards/ - get a list of all cards
+// GET /cards/:category - get a list of all cards in :category
+// POST /card - create a new card.
+
+app.get('/categories', (req, res) => {
+    connection.query('SELECT distinct(category) FROM cards ORDER by category', (err, results) => {
+        let cats = [];
+        for ( let i = 0; i < results.length; i++ ) {
+            cats.push(results[i].category);
+        }
+        res.json(cats);
+    });
+});
+
 app.get('/cards', (req, res) => {
     connection.query('SELECT id,category,question FROM cards ORDER BY category,id', (err, results) => {
         res.json(results);
@@ -50,5 +67,17 @@ app.get('/card', (req, res) => {
     });
 });
 
+app.get('/card/:category', (req, res) => {
+    connection.query('SELECT id,category,question,answer FROM cards WHERE category = ? ORDER BY RAND() LIMIT 1', [req.params.category], (err, results) => {
+        let output = {
+            id: results[0].id,
+            category: results[0].category,
+            question: results[0].question,
+            answer: results[0].answer,
+        };
+
+        res.json(output);
+    });
+});
 
 app.listen(process.env.PORT || 3000);

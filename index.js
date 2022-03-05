@@ -50,7 +50,8 @@ app.post('/card', (req, res) => {
     let answer = req.body.answer;
 
     connection.query('INSERT INTO cards (category, question, answer) VALUES (?, ?, ?)', [category, question, answer], (err, results) => {
-        res.json({ id: results.insertId, category: category, quwestion: question, answer: answer });
+        //res.json({ id: results.insertId, category: category, quwestion: question, answer: answer });
+        res.redirect('/');
     });
 });
 

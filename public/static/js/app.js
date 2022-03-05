@@ -151,4 +151,20 @@ function Question(id, title, answer){
 // dom event listener to run when content is loaded
 document.addEventListener('DOMContentLoaded', function(){
     eventListeners();
+
+    // load categories
+    let $catEl = document.getElementById('categories-list');
+    let xhr = new XMLHttpRequest();
+    xhr.open('get', '/categories');
+    xhr.onload = function() {
+        let cats = JSON.parse(this.responseText);
+        let output = '<ul>';
+        for ( let i = 0; i < cats.length; i++ ) {
+            output = output + `<li>${cats[i]}</li>`;
+        }
+        output = output + '</ul>';
+        $catEl.innerHTML = output;
+    }
+    xhr.send();
+
 })

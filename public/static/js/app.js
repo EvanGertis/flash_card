@@ -179,6 +179,10 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     xhr.send();
 
+    document.getElementById('next').addEventListener('click', function() { 
+        getCard(currentCategory);
+    });
+
 });
 
 /*
@@ -196,6 +200,12 @@ function getCard(category) {
         // todo - make this look good
         let card = JSON.parse(this.responseText);
         console.log(card);
+        document.getElementById('question_front').innerHTML = card.question;
+        document.getElementById('answer_back').innerHTML = card.answer;
+        document.getElementById('card-holder').style.display = 'block';
+        document.getElementById('create-form').style.display = 'none';
+
+        
     };
     xhr.send();
 }

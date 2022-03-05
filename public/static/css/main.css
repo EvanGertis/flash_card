@@ -4,6 +4,19 @@
     --mainOrange: #ff8552;
     --mainGreen: #297373;
   }
+
+  #card-holder {
+    display:none;
+  }
+
+  #next {
+    font-size: 125%;
+    margin-top: 20px;
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  
   body {
     background: var(--mainWhite);
     color: var(--mainDark);

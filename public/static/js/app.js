@@ -206,6 +206,8 @@ function getCard(category) {
         // todo - make this look good
         let card = JSON.parse(this.responseText);
         console.log(card);
+        card.question = card.question.replace(/\n/g, '<br>');
+        card.answer = card.answer.replace(/\n/g, '<br>');
         document.getElementById('question_front').innerHTML = card.question;
         document.getElementById('answer_back').innerHTML = card.answer;
         document.getElementById('card-holder').style.display = 'block';

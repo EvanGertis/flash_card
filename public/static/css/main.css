@@ -31,6 +31,11 @@
     color: var(--mainDark);
   }
   
+.flip-card-inner {
+  margin: 10px;
+  font-size: 125%;
+}
+
   .question-card {
     display: none;
     position: relative;

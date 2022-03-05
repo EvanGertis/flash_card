@@ -1,3 +1,4 @@
+/*
 //event listeners - will be invoked after DOM Content is loaded
 function eventListeners(){
     const showBtn = document.getElementById("show-btn");
@@ -148,7 +149,53 @@ function Question(id, title, answer){
     this.title = title;
     this.answer = answer;
 }
+*/
+
+let currentCategory = '';
+
 // dom event listener to run when content is loaded
 document.addEventListener('DOMContentLoaded', function(){
-    eventListeners();
-})
+    //eventListeners();
+
+    // load categories
+    console.log('Load categories');
+    let $catEl = document.getElementById('categories-list');
+    let xhr = new XMLHttpRequest();
+    xhr.open('get', '/categories');
+    xhr.onload = function() {
+        let cats = JSON.parse(this.responseText);
+        let output = '<ul>';
+        for ( let i = 0; i < cats.length; i++ ) {
+            output = output + `<li><a href="#${cats[i]}" class="load_cat" data-category="${cats[i]}">${cats[i]}</a></li>`;
+        }
+        output = output + '</ul>';
+        $catEl.innerHTML = output;
+
+        $('.load_cat').on('click', function() {
+            currentCategory = this.dataset.category;
+            
+            getCard(currentCategory);
+        })
+    }
+    xhr.send();
+
+});
+
+/*
+{
+id: 3,
+category: "fun",
+question: "Who is Chase?",
+answer: "A dude!"
+}
+*/
+function getCard(category) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('get', '/card/' + category);
+    xhr.onload = function() {
+        // todo - make this look good
+        let card = JSON.parse(this.responseText);
+        console.log(card);
+    };
+    xhr.send();
+}

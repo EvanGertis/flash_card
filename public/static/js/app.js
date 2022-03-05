@@ -157,6 +157,12 @@ let currentCategory = '';
 document.addEventListener('DOMContentLoaded', function(){
     //eventListeners();
 
+    document.getElementById('show-btn').addEventListener('click', function() {
+        document.getElementById('card-holder').style.display = 'none';
+        document.getElementById('create-form').style.display = 'block';
+        document.getElementById('category-input').value = currentCategory;
+    });
+
     // load categories
     console.log('Load categories');
     let $catEl = document.getElementById('categories-list');

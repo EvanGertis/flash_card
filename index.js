@@ -23,6 +23,7 @@ app.set('view engine', 'ejs');
 // GET /cards/:category - get a list of all cards in :category
 // POST /card - create a new card.
 
+// This retrieves categories.
 app.get('/categories', (req, res) => {
     connection.query('SELECT distinct(category) FROM cards ORDER by category', (err, results) => {
         let cats = [];
@@ -33,17 +34,21 @@ app.get('/categories', (req, res) => {
     });
 });
 
+// This retrieves cards.
 app.get('/cards', (req, res) => {
     connection.query('SELECT id,category,question FROM cards ORDER BY category,id', (err, results) => {
         res.json(results);
     });
 });
+
+// This retrieves a specific category.
 app.get('/cards/:category', (req, res) => {
     connection.query('SELECT id,category,question FROM cards WHERE category = ? ORDER BY id', [req.params.category], (err, results) => {
         res.json(results);
     });
 });
 
+// Thiss creates a card.
 app.post('/card', (req, res) => {
     let category = req.body.category;
     let question = req.body.question;
@@ -55,6 +60,7 @@ app.post('/card', (req, res) => {
     });
 });
 
+// This retrieves a card.
 app.get('/card', (req, res) => {
     connection.query('SELECT id,category,question,answer FROM cards ORDER BY RAND() LIMIT 1', (err, results) => {
         let output = {
@@ -68,6 +74,7 @@ app.get('/card', (req, res) => {
     });
 });
 
+// This retrives a specific category.
 app.get('/card/:category', (req, res) => {
     connection.query('SELECT id,category,question,answer FROM cards WHERE category = ? ORDER BY RAND() LIMIT 1', [req.params.category], (err, results) => {
         let output = {
@@ -81,4 +88,5 @@ app.get('/card/:category', (req, res) => {
     });
 });
 
+// This adds a listener to our application.
 app.listen(process.env.PORT || 3000);

@@ -4,5 +4,5 @@
 - ``` docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=test -e MYSQL_DATABASE=flash_card mysql:5.7 ```
 
 ## Instructions for staring the server
-- ``` cd DevFlashCard ```
+- ``` cd flash_card ```
 - ``` node index.js ```

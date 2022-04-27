@@ -26,6 +26,8 @@ app.set('view engine', 'ejs');
 app.get('/categories', (req, res) => {
     connection.query('SELECT distinct(category) FROM cards ORDER by category', (err, results) => {
         let cats = [];
+        console.log(results)
+        // TODO: adding a migration file will ensure that the results are populated
         for ( let i = 0; i < results.length; i++ ) {
             cats.push(results[i].category);
         }
@@ -38,8 +40,15 @@ app.get('/cards', (req, res) => {
         res.json(results);
     });
 });
+// dynamic route 
 app.get('/cards/:category', (req, res) => {
     connection.query('SELECT id,category,question FROM cards WHERE category = ? ORDER BY id', [req.params.category], (err, results) => {
+        res.json(results);
+    });
+});
+
+app.get('/cards/:category/:topic', (req, res) => {
+    connection.query('SELECT id,category,question FROM categry WHERE topic = ? ORDER BY id', [req.params.topic], (err, results) => {
         res.json(results);
     });
 });
